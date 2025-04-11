@@ -15,11 +15,35 @@
         }
         
         .hero-section {
-            background-color: #f9fafb;
-            background-image: url('https://images.unsplash.com/photo-1617481327231-7a68f7475ec0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
+            height: 550px;
+            background-color: #f9fafb; /* 배경색 추가 */
             position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 400%;
+            height: 100%;
+            z-index: 0;
+            display: flex;
+            animation: slide 20s infinite;
+        }
+        
+        .hero-slider img {
+            width: 25%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-100%); }
+            50% { transform: translateX(-200%); }
+            75% { transform: translateX(-300%); }
+            100% { transform: translateX(0); }
         }
         
         .hero-section::before {
@@ -48,13 +72,13 @@
         }
         
         .package-card {
-            transition: all 0.3s ease;
-            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease;
         }
         
-        .package-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        .package-card:hover, .package-card.selected {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-color: #4f46e5;
         }
         
         .premium-card {
@@ -157,6 +181,77 @@
             border-radius: 50%;
             object-fit: cover;
         }
+
+        .testimonial-carousel {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .testimonial-carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial-card {
+            min-width: 33.33%;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                height: auto;
+                padding: 20px;
+            }
+
+            .testimonial-card {
+                min-width: 100%;
+            }
+
+            .language-selector {
+                display: block;
+            }
+        }
+
+        .testimonial-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .testimonial-card {
+            width: 300px;
+            margin: 0 10px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .testimonial-navigation {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .testimonial-navigation button {
+            background-color: #4f46e5;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -164,7 +259,7 @@
     <nav class="bg-white py-4 fixed w-full z-10 shadow-sm">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold text-indigo-600" data-lang-key="brand">KoreaSettle</a>
-            <div class="hidden md:flex space-x-8 items-center">
+            <div class="md:flex space-x-8 items-center">
                 <a href="#services" class="text-gray-700 hover:text-indigo-600 transition" data-lang-key="nav_services">서비스</a>
                 <a href="#packages" class="text-gray-700 hover:text-indigo-600 transition" data-lang-key="nav_packages">패키지</a>
                 <a href="#faq" class="text-gray-700 hover:text-indigo-600 transition" data-lang-key="nav_faq">FAQ</a>
@@ -207,20 +302,32 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section min-h-screen flex items-center pt-16">
-        <div class="container mx-auto px-6 py-20 hero-content text-center">
-            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6" data-lang-key="hero_title">한국에서의 새로운 시작</h1>
-            <p class="text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto" data-lang-key="hero_subtitle">
+    <section class="hero-section flex items-center pt-8">
+        <div class="container mx-auto px-4 py-12 hero-content text-center">
+            <!-- 제목 텍스트 크기 축소 (text-3xl / md:text-4xl) -->
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-4" data-lang-key="hero_title">
+                한국에서의 새로운 시작
+            </h1>
+            <!-- 부제목 텍스트 크기 축소 (text-lg / md:text-xl) -->
+            <p class="text-lg md:text-xl text-gray-200 mb-6 max-w-2xl mx-auto" data-lang-key="hero_subtitle">
                 생활부터 법률까지, 외국인의 한국 정착을 위한 모든 솔루션을 제공합니다
             </p>
-            <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
-                <a href="#packages" class="bg-indigo-600 text-white px-8 py-3 rounded-full hover:bg-indigo-700 transition text-lg font-medium" data-lang-key="hero_button_1">
+            <!-- 버튼 여백과 패딩 축소 (px-6 py-2, space-x-4) -->
+            <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
+                <a href="#packages" class="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition text-base font-medium" data-lang-key="hero_button_1">
                     서비스 알아보기
                 </a>
-                <a href="#contact" class="bg-white text-indigo-600 px-8 py-3 rounded-full hover:bg-gray-100 transition text-lg font-medium" data-lang-key="hero_button_2">
+                <a href="#contact" class="bg-white text-indigo-600 px-6 py-2 rounded-full hover:bg-gray-100 transition text-base font-medium" data-lang-key="hero_button_2">
                     상담 예약하기
                 </a>
             </div>
+        </div>
+        <!-- 슬라이더 부분은 그대로 유지 -->
+        <div class="hero-slider">
+            <img src="image1.jpg" alt="Traditional Image 1">
+            <img src="image2.jpg" alt="Traditional Image 2">
+            <img src="image3.jpg" alt="Modern Image 1">
+            <img src="image4.jpg" alt="Modern Image 2">
         </div>
     </section>
 
@@ -340,7 +447,7 @@
 
             <div class="flex flex-col lg:flex-row justify-center gap-8">
                 <!-- Starter Package -->
-                <div class="package-card bg-white rounded-xl overflow-hidden flex-1 max-w-md mx-auto">
+                <div class="package-card bg-white rounded-xl overflow-hidden flex-1 max-w-md mx-auto hover:shadow-lg transition-shadow duration-300">
                     <div class="bg-indigo-50 p-6 text-center">
                         <h3 class="text-2xl font-bold text-indigo-600 mb-2" data-lang-key="starter_title">스타터 패키지</h3>
                         <p class="text-gray-600 mb-4" data-lang-key="starter_subtitle">한국 생활의 필수 요소를 위한 기본 서비스</p>
@@ -389,7 +496,7 @@
                 </div>
 
                 <!-- Premium Package -->
-                <div class="package-card premium-card bg-white rounded-xl overflow-hidden flex-1 max-w-md mx-auto">
+                <div class="package-card bg-white rounded-xl overflow-hidden flex-1 max-w-md mx-auto">
                     <div class="bg-indigo-600 p-6 text-center">
                         <h3 class="text-2xl font-bold text-white mb-2" data-lang-key="premium_title">프리미엄 패키지</h3>
                         <p class="text-indigo-100 mb-4" data-lang-key="premium_subtitle">완벽한 정착을 위한 종합 지원 서비스</p>
@@ -514,9 +621,7 @@
                     </div>
                     <div class="accordion-content px-5 pb-5">
                         <p class="text-gray-600" data-lang-key="faq_a1">
-                            스타터 패키지는 한국 생활의 필수 요소를 위한 기본 서비스를 제공합니다. 
-                            외국인 등록증 신청 지원, 은행 계좌 개설, 휴대폰 개통, 기본 주거 임대 정보, 
-                            필수 생활 앱 설치 및 사용법 안내, 공공 교통 이용 방법, 기본 건강보험 가입 등이 포함됩니다.
+                            스타터 패키지는 한국 생활의 필수 요소를 위한 기본 서비스를 제공합니다. 외국인 등록증 신청 지원, 은행 계좌 개설, 휴대폰 개통, 기본 주거 임대 정보, 필수 생활 앱 설치 및 사용법 안내, 공공 교통 이용 방법, 기본 건강보험 가입 등이 포함됩니다.
                         </p>
                     </div>
                 </div>
@@ -545,9 +650,7 @@
                     </div>
                     <div class="accordion-content px-5 pb-5">
                         <p class="text-gray-600" data-lang-key="faq_a3">
-                            기본 서비스 기간은 1개월이며, 3개월, 6개월, 1년 단위로 계약이 가능합니다. 
-                            장기 계약 시 할인 혜택이 제공되며, 필요에 따라 서비스 기간을 연장할 수 있습니다. 
-                            구체적인 사항은 초기 상담 시 논의할 수 있습니다.
+                            기본 서비스 기간은 1개월이며, 3개월, 6개월, 1년 단위로 계약이 가능합니다. 장기 계약 시 할인 혜택이 제공되며, 필요에 따라 서비스 기간을 연장할 수 있습니다. 구체적인 사항은 초기 상담 시 논의할 수 있습니다.
                         </p>
                     </div>
                 </div>
@@ -575,9 +678,7 @@
                     </div>
                     <div class="accordion-content px-5 pb-5">
                         <p class="text-gray-600" data-lang-key="faq_a5">
-                            스타터 패키지에서는 기본적인 주거 정보 제공과 임대 조건 조언을 제공합니다. 
-                            프리미엄 패키지에서는 전문 부동산 중개, 계약서 법률 검토, 임대인과의 협상, 
-                            보증금 안전 거래 지원, 이사 및 집 꾸미기 조언 등 포괄적인 주거 관련 서비스를 제공합니다.
+                            스타터 패키지에서는 기본적인 주거 정보 제공과 임대 조건 조언을 제공합니다. 프리미엄 패키지에서는 전문 부동산 중개, 계약서 법률 검토, 임대인과의 협상, 보증금 안전 거래 지원, 이사 및 집 꾸미기 조언 등 포괄적인 주거 관련 서비스를 제공합니다.
                         </p>
                     </div>
                 </div>
@@ -590,9 +691,7 @@
                     </div>
                     <div class="accordion-content px-5 pb-5">
                         <p class="text-gray-600" data-lang-key="faq_a6">
-                            프리미엄 패키지 이용 고객에게는 24시간 긴급 연락 서비스가 제공됩니다. 
-                            갑작스러운 의료 상황, 법적 문제, 주거 관련 긴급 사항 등이 발생했을 때 
-                            언제든지 전담 컨설턴트에게 연락하여 도움을 받을 수 있습니다.
+                            프리미엄 패키지 이용 고객에게는 24시간 긴급 연락 서비스가 제공됩니다. 갑작스러운 의료 상황, 법적 문제, 주거 관련 긴급 사항 등이 발생했을 때 언제든지 전담 컨설턴트에게 연락하여 도움을 받을 수 있습니다.
                         </p>
                     </div>
                 </div>
@@ -610,21 +709,104 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <!-- Testimonial 1 -->
+            <div class="testimonial-section">
+                <div class="testimonial-carousel">
+                    <div class="testimonial-carousel-inner">
+                        <!-- Testimonial 1 -->
+                        <div class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-sm">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-indigo-200 rounded-full flex items-center justify-center mr-4">
+                                    <span class="text-indigo-600 font-bold">JM</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">John Miller</h4>
+                                    <p class="text-gray-500 text-sm" data-lang-key="testimonial_1_country">미국 🇺🇸</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600" data-lang-key="testimonial_1_text">
+                                "KoreaSettle 덕분에 한국에서의 새로운 시작이 훨씬 수월했습니다. 비자 신청부터 은행 계좌 개설까지, 모든 과정을 전문적으로 도와주셔서 정말 감사합니다. 특히 언어 장벽 없이 모든 것을 처리할 수 있어 큰 도움이 되었습니다."
+                            </p>
+                            <div class="mt-4 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 2 -->
+                        <div class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-sm">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-indigo-200 rounded-full flex items-center justify-center mr-4">
+                                    <span class="text-indigo-600 font-bold">LC</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">Liu Chen</h4>
+                                    <p class="text-gray-500 text-sm" data-lang-key="testimonial_2_country">중국 🇨🇳</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600" data-lang-key="testimonial_2_text">
+                                "프리미엄 패키지를 이용했는데, 정말 가치 있는 투자였습니다. 특히 부동산 계약과 법률 검토 서비스가 매우 유용했고, 세금 신고 지원도 큰 도움이 되었습니다. 한국에서의 정착이 이렇게 순조로울 줄 몰랐습니다."
+                            </p>
+                            <div class="mt-4 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 3 -->
+                        <div class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-sm">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-indigo-200 rounded-full flex items-center justify-center mr-4">
+                                    <span class="text-indigo-600 font-bold">SG</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">Sofia Garcia</h4>
+                                    <p class="text-gray-500 text-sm" data-lang-key="testimonial_3_country">스페인 🇪🇸</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600" data-lang-key="testimonial_3_text">
+                                "한국 문화와 시스템에 대한 이해 없이 이사 왔을 때 많은 걱정이 있었습니다. KoreaSettle의 문화 적응 프로그램과 네트워킹 이벤트는 새로운 친구를 사귀고 한국 사회에 적응하는 데 큰 도움이 되었습니다. 정말 추천합니다!"
+                            </p>
+                            <div class="mt-4 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-navigation">
+                    <button class="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 transition">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 transition">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Additional Testimonials in Card Style -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mt-8">
                 <div class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-sm">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-indigo-200 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-indigo-600 font-bold">JM</span>
+                            <span class="text-indigo-600 font-bold">AB</span>
                         </div>
                         <div>
-                            <h4 class="font-semibold">John Miller</h4>
-                            <p class="text-gray-500 text-sm" data-lang-key="testimonial_1_country">미국 🇺🇸</p>
+                            <h4 class="font-semibold">Alice Brown</h4>
+                            <p class="text-gray-500 text-sm">영국 🇬🇧</p>
                         </div>
                     </div>
-                    <p class="text-gray-600" data-lang-key="testimonial_1_text">
-                        "KoreaSettle 덕분에 한국에서의 새로운 시작이 훨씬 수월했습니다. 비자 신청부터 은행 계좌 개설까지, 
-                        모든 과정을 전문적으로 도와주셔서 정말 감사합니다. 특히 언어 장벽 없이 모든 것을 처리할 수 있어 큰 도움이 되었습니다."
+                    <p class="text-gray-600">
+                        "KoreaSettle의 서비스는 정말 훌륭했습니다. 모든 것이 매끄럽게 진행되었고, 한국에서의 생활이 훨씬 쉬워졌습니다."
                     </p>
                     <div class="mt-4 text-yellow-400">
                         <i class="fas fa-star"></i>
@@ -635,45 +817,18 @@
                     </div>
                 </div>
 
-                <!-- Testimonial 2 -->
                 <div class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-sm">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-indigo-200 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-indigo-600 font-bold">LC</span>
+                            <span class="text-indigo-600 font-bold">CD</span>
                         </div>
                         <div>
-                            <h4 class="font-semibold">Liu Chen</h4>
-                            <p class="text-gray-500 text-sm" data-lang-key="testimonial_2_country">중국 🇨🇳</p>
+                            <h4 class="font-semibold">Carlos Diaz</h4>
+                            <p class="text-gray-500 text-sm">멕시코 🇲🇽</p>
                         </div>
                     </div>
-                    <p class="text-gray-600" data-lang-key="testimonial_2_text">
-                        "프리미엄 패키지를 이용했는데, 정말 가치 있는 투자였습니다. 특히 부동산 계약과 법률 검토 서비스가 
-                        매우 유용했고, 세금 신고 지원도 큰 도움이 되었습니다. 한국에서의 정착이 이렇게 순조로울 줄 몰랐습니다."
-                    </p>
-                    <div class="mt-4 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-
-                <!-- Testimonial 3 -->
-                <div class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-indigo-200 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-indigo-600 font-bold">SG</span>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Sofia Garcia</h4>
-                            <p class="text-gray-500 text-sm" data-lang-key="testimonial_3_country">스페인 🇪🇸</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600" data-lang-key="testimonial_3_text">
-                        "한국 문화와 시스템에 대한 이해 없이 이사 왔을 때 많은 걱정이 있었습니다. 
-                        KoreaSettle의 문화 적응 프로그램과 네트워킹 이벤트는 새로운 친구를 사귀고 
-                        한국 사회에 적응하는 데 큰 도움이 되었습니다. 정말 추천합니다!"
+                    <p class="text-gray-600">
+                        "한국에서의 정착이 이렇게 쉬울 줄 몰랐습니다. KoreaSettle 덕분에 모든 것이 순조로웠습니다."
                     </p>
                     <div class="mt-4 text-yellow-400">
                         <i class="fas fa-star"></i>
@@ -681,6 +836,28 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+
+                <div class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-indigo-200 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-indigo-600 font-bold">EF</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Emma Frost</h4>
+                            <p class="text-gray-500 text-sm">호주 🇦🇺</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">
+                        "KoreaSettle의 지원 덕분에 한국에서의 새로운 시작이 훨씬 수월했습니다. 강력 추천합니다!"
+                    </p>
+                    <div class="mt-4 text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                     </div>
                 </div>
             </div>
@@ -738,7 +915,7 @@
                 </div>
                 
                 <div class="lg:w-1/2 bg-white rounded-xl shadow-md p-8">
-                    <form action="https://docs.google.com/forms/d/18kRoxa-U7bNLfAfcYHTU8DZ2cihpd_4bBG8wd82p4NY/viewform" method="get" target="_blank">
+                    <form action="https://docs.google.com/forms/d/e/1FAIpQLSd3EHAMSYrqMpvJLssfrMLRR5OkCdkzIsVjMOo98edi-gYo1A/formResponse?entry.299738625=홍길동&entry.210154592=example@email.com" method="POST" target="_blank">
                         <div class="mb-6">
                             <label class="block text-gray-700 font-medium mb-2" for="name" data-lang-key="form_name">이름</label>
                             <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500" data-lang-key="form_name_placeholder" placeholder="홍길동" required>
@@ -891,7 +1068,7 @@
                 service_2_desc: "임대차 계약서 검토, 부동산 중개, 주택 보증금 관련 조언 등 안전한 주거 정착을 도와드립니다.",
                 
                 service_3_title: "금융 서비스",
-                service_3_desc: "은행 계좌 개설, 보험 가입, 세금 신고 등 한국에서의 금융 활동을 지원합니다.",
+                service_3_desc: "은행 계좌 개설, 보험 가입, 세금 신고 등 한국에서의 금융 활동을 지원합니다.
                 
                 service_4_title: "법률 상담",
                 service_4_desc: "외국인 관련 법률 문제, 노동법, 계약서 검토 등 법적 조언을 제공합니다.",
@@ -900,7 +1077,7 @@
                 service_5_desc: "휴대폰 개통, 인터넷 설치, 공공서비스 이용 방법 등 일상생활에 필요한 정보를 안내합니다.",
                 
                 service_6_title: "네트워킹",
-                service_6_desc: "외국인 커뮤니티 연결, 교류 모임, 전문 분야별 네트워크 형성을 지원합니다.",
+                service_6_desc: "외국인 커뮤니티 연결, 교류 모임, 전문 분야별 네트워크 형성을 지원합니다.
                 
                 service_7_title: "언어 지원",
                 service_7_desc: "통번역 서비스, 한국어 학습 리소스, 중요 서류 번역 서비스를 제공합니다.",
@@ -960,7 +1137,7 @@
                 faq_subtitle: "한국 정착 과정에서 외국인들이 자주 갖는 궁금증에 대한 답변입니다.",
                 
                 faq_q1: "스타터 패키지에는 어떤 서비스가 포함되어 있나요?",
-                faq_a1: "스타터 패키지는 한국 생활의 필수 요소를 위한 기본 서비스를 제공합니다. 외국인 등록증 신청 지원, 은행 계좌 개설, 휴대폰 개통, 기본 주거 임대 정보, 필수 생활 앱 설치 및 사용법 안내, 공공 교통 이용 방법, 기본 건강보험 가입 등이 포함됩니다.",
+                faq_a1: "스타터 패키지는 한국 생활의 필수 요소를 위한 기본 서비스를 제공합니다. 외국인 등록증 신청 지원, 은행 계좌 개설, 휴대폰 개통, 기본 주거 임대 정보, 필수 생활 앱 설치 및 사용법 안내, 공공 교통 이용 방법, 기본 건강보험 가입 등이 포함됩니다.
                 
                 faq_q2: "프리미엄 패키지의 추가 혜택은 무엇인가요?",
                 faq_a2: "프리미엄 패키지는 스타터 패키지의 모든 서비스에 추가로 전문 부동산 계약 중개 및 법률 검토, 세금 신고 및 회계 상담, 비자 연장 및 변경 절차 대행, 개인 맞춤형 법률 상담(월 2회), VIP 네트워킹 이벤트 초대, 프리미엄 의료 서비스 연결, 1:1 라이프스타일 멘토링, 24/7 전용 비상 연락 서비스 등이 포함됩니다.",
@@ -1315,7 +1492,7 @@
                 faq_a5: "スターターパッケージでは基本的な住居情報提供と賃貸条件のアドバイスを提供します。プレミアムパッケージでは専門不動産仲介、契約書の法律レビュー、賃貸人との交渉、保証金の安全取引サポート、引越しと家の装飾アドバイスなど包括的な住居関連サービスを提供します。",
                 
                 faq_q6: "緊急状況でも助けを受けられますか？",
-                faq_a6: "プレミアムパッケージ利用のお客様には24時間緊急連絡サービスが提供されます。突然の医療状況、法的問題、住居関連の緊急事項などが発生した場合、いつでも担当コンサルタントに連絡して助けを受けることができます。",
+                faq_a6: "プレミアムパッケージ利用のお客様には24時間緊急連絡サービスが提供されます。突然の医療状況、法的問題、住居緊急事項などが発生した場合、いつでも担当コンサルタントに連絡して助けを受けることができます。",
                 
                 // Testimonials Section
                 testimonials_title: "お客様の声",
@@ -1334,7 +1511,7 @@
                 contact_title: "相談申請",
                 contact_subtitle: "韓国での新しいスタートのための最初の一歩をKoreaSettleと一緒に始めましょう。以下のフォームに記入して相談を申請すると、24時間以内にご連絡いたします。",
                 contact_info_title: "連絡先情報",
-                contact_address: "ソウル特別市江南区テヘラン路123、7階",
+                contact_address: "ソウル特別市江南구 테헤란로 123, 7층",
                 contact_hours: "平日 9:00 - 18:00（韓国時間）",
                 social_media_title: "ソーシャルメディア",
                 
@@ -1368,7 +1545,7 @@
                 footer_testimonials: "お客様の声",
                 footer_faq: "よくある質問",
                 footer_contact: "連絡先",
-                footer_address: "ソウル特別市江南区テヘラン路123、7階",
+                footer_address: "ソウル特別市江남구 테헤란로 123, 7층",
                 footer_hours: "平日 9:00 - 18:00（韓国時間）",
                 footer_copyright: "© 2023 KoreaSettle. 無断複製禁止。",
                 footer_privacy: "プライバシーポリシー",
@@ -1548,7 +1725,7 @@
         };
         
         // Set default language
-        let currentLanguage = 'ko';
+        let currentLanguage = 'en';
         
         // Flag and language text mapping
         const languageFlags = {
@@ -1655,6 +1832,19 @@
 
         // Initialize language
         updateLanguage(currentLanguage);
+
+        // Set default language to English
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLanguage('en');
+        });
+
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const formAction = `https://docs.google.com/forms/d/e/1FAIpQLSd3EHAMSYrqMpvJLssfrMLRR5OkCdkzIsVjMOo98edi-gYo1A/formResponse?entry.299738625=${encodeURIComponent(name)}&entry.210154592=${encodeURIComponent(email)}`;
+            window.open(formAction, '_blank');
+        });
     </script>
 </body>
 </html>
