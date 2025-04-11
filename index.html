@@ -191,11 +191,18 @@
         .testimonial-carousel-inner {
             display: flex;
             transition: transform 0.5s ease;
+            justify-content: space-between;
         }
 
         .testimonial-card {
-            min-width: 33.33%;
-            box-sizing: border-box;
+            width: 300px;
+            margin: 0 10px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1;
         }
 
         @media (max-width: 768px) {
@@ -220,37 +227,8 @@
             position: relative;
         }
 
-        .testimonial-card {
-            width: 300px;
-            margin: 0 10px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
         .testimonial-navigation {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            padding: 0 20px;
-        }
-
-        .testimonial-navigation button {
-            background-color: #4f46e5;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
+            display: none;
         }
     </style>
 </head>
@@ -324,7 +302,7 @@
         </div>
         <!-- 슬라이더 부분은 그대로 유지 -->
         <div class="hero-slider">
-            <img src="image1.jpg" alt="Traditional Image 1">
+            <img src="https://github.com/Hiden-Giant/F_agent/blob/main/kr_palace.png?raw=true" alt="Traditional Image 1">
             <img src="image2.jpg" alt="Traditional Image 2">
             <img src="image3.jpg" alt="Modern Image 1">
             <img src="image4.jpg" alt="Modern Image 2">
@@ -782,83 +760,13 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="testimonial-navigation">
-                    <button class="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 transition">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 transition">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
             </div>
 
             <!-- Additional Testimonials in Card Style -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mt-8">
-                <div class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-indigo-200 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-indigo-600 font-bold">AB</span>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Alice Brown</h4>
-                            <p class="text-gray-500 text-sm">영국 🇬🇧</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600">
-                        "KoreaSettle의 서비스는 정말 훌륭했습니다. 모든 것이 매끄럽게 진행되었고, 한국에서의 생활이 훨씬 쉬워졌습니다."
-                    </p>
-                    <div class="mt-4 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-
-                <div class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-indigo-200 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-indigo-600 font-bold">CD</span>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Carlos Diaz</h4>
-                            <p class="text-gray-500 text-sm">멕시코 🇲🇽</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600">
-                        "한국에서의 정착이 이렇게 쉬울 줄 몰랐습니다. KoreaSettle 덕분에 모든 것이 순조로웠습니다."
-                    </p>
-                    <div class="mt-4 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                </div>
-
-                <div class="testimonial-card bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-indigo-200 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-indigo-600 font-bold">EF</span>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Emma Frost</h4>
-                            <p class="text-gray-500 text-sm">호주 🇦🇺</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600">
-                        "KoreaSettle의 지원 덕분에 한국에서의 새로운 시작이 훨씬 수월했습니다. 강력 추천합니다!"
-                    </p>
-                    <div class="mt-4 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
+                
+                    <div class="flex items-center mb-4">                       
+                       
                 </div>
             </div>
         </div>
@@ -1068,7 +976,7 @@
                 service_2_desc: "임대차 계약서 검토, 부동산 중개, 주택 보증금 관련 조언 등 안전한 주거 정착을 도와드립니다.",
                 
                 service_3_title: "금융 서비스",
-                service_3_desc: "은행 계좌 개설, 보험 가입, 세금 신고 등 한국에서의 금융 활동을 지원합니다.
+                service_3_desc: "은행 계좌 개설, 보험 가입, 세금 신고 등 한국에서의 금융 활동을 지원합니다.",
                 
                 service_4_title: "법률 상담",
                 service_4_desc: "외국인 관련 법률 문제, 노동법, 계약서 검토 등 법적 조언을 제공합니다.",
@@ -1077,7 +985,7 @@
                 service_5_desc: "휴대폰 개통, 인터넷 설치, 공공서비스 이용 방법 등 일상생활에 필요한 정보를 안내합니다.",
                 
                 service_6_title: "네트워킹",
-                service_6_desc: "외국인 커뮤니티 연결, 교류 모임, 전문 분야별 네트워크 형성을 지원합니다.
+                service_6_desc: "외국인 커뮤니티 연결, 교류 모임, 전문 분야별 네트워크 형성을 지원합니다.",
                 
                 service_7_title: "언어 지원",
                 service_7_desc: "통번역 서비스, 한국어 학습 리소스, 중요 서류 번역 서비스를 제공합니다.",
@@ -1137,7 +1045,7 @@
                 faq_subtitle: "한국 정착 과정에서 외국인들이 자주 갖는 궁금증에 대한 답변입니다.",
                 
                 faq_q1: "스타터 패키지에는 어떤 서비스가 포함되어 있나요?",
-                faq_a1: "스타터 패키지는 한국 생활의 필수 요소를 위한 기본 서비스를 제공합니다. 외국인 등록증 신청 지원, 은행 계좌 개설, 휴대폰 개통, 기본 주거 임대 정보, 필수 생활 앱 설치 및 사용법 안내, 공공 교통 이용 방법, 기본 건강보험 가입 등이 포함됩니다.
+                faq_a1: "스타터 패키지는 한국 생활의 필수 요소를 위한 기본 서비스를 제공합니다. 외국인 등록증 신청 지원, 은행 계좌 개설, 휴대폰 개통, 기본 주거 임대 정보, 필수 생활 앱 설치 및 사용법 안내, 공공 교통 이용 방법, 기본 건강보험 가입 등이 포함됩니다.",
                 
                 faq_q2: "프리미엄 패키지의 추가 혜택은 무엇인가요?",
                 faq_a2: "프리미엄 패키지는 스타터 패키지의 모든 서비스에 추가로 전문 부동산 계약 중개 및 법률 검토, 세금 신고 및 회계 상담, 비자 연장 및 변경 절차 대행, 개인 맞춤형 법률 상담(월 2회), VIP 네트워킹 이벤트 초대, 프리미엄 의료 서비스 연결, 1:1 라이프스타일 멘토링, 24/7 전용 비상 연락 서비스 등이 포함됩니다.",
